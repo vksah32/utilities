@@ -7,36 +7,47 @@
 
 # Prereq: need a github repo to store the pics and a local repo
 
-LOCAL_PICS_REPO_PATH='~/repos/screenshots/'
-BASE_DOWNLOAD_LINK='https://raw.githubusercontent.com/vksah32/screenshots/master/'
+LOCAL_PICS_REPO_PATH='/Users/viveks/repos/screenshots'
+BASE_DOWNLOAD_LINK='https://raw.githubusercontent.com/vksah32/screenshots/master'
 
 # Uploads multiple files at a time
 function main () {
 	if [ "$#" -eq 0 ]; then
-    	echo "Please specify at least one file\n"
-		return 1
+    	printf "Please specify at least one file\n"
+		exit 1
 	fi
 
-	cd $LOCAL_PICS_REPO_PATH
+	
 	# go through all pics, move them to screenshots repo
 	for file in "$@"
 	do
-  		add_to_repo_and_upload $file		 				 
+		# printf "Processing %s\n" "$file"
+  		if  ! add_to_repo_and_upload "$file"; then 
+  			# printf "Successfully processed %s\n" "$file"
+		
+			# printf "Failed processing %s\n" "$file"
+			exit 1
+  		fi		 				 
 	done
-	return 0
+	exit 0
 }
 
 function add_to_repo_and_upload () {
-	mv $1 ./
-	filename=`basename $1`
+	[ -f "$1" ] || return 
+	CURRENT_DIR=$(pwd)
+	mv "$1" $LOCAL_PICS_REPO_PATH || return
+	cd $LOCAL_PICS_REPO_PATH ||  return
+	filename=$(basename "$1")
 	# replace space in filenames with underscores
 	newfilename="${filename// /_}" 
-	mv "$filenamme"  "$newfilenamme"
-	printf "new filename is ${newfilename}"
-	git add .
-	git commit -m "Add ${newfilename}"
-	git push origin master
-	printf "${BASE_DOWNLOAD_LINK}/${newfilename}\n"
+	mv "$filename"  "$newfilename"
+	# printf "new filename is %s\n" "$newfilename"
+	git add .  > /dev/null 2>&1
+	git commit -m "Add ${newfilename}"  > /dev/null 2>&1
+	git push origin master > /dev/null 2>&1
+	printf "%s/%s\n" "$BASE_DOWNLOAD_LINK" "$newfilename"
+	cd "$CURRENT_DIR" || return
+	
 }
 
 #execute main
