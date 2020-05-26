@@ -1,11 +1,13 @@
 #!/bin/bash
 
+# Author: Vivek Sah
+#
 # A simple bash script which will be used by Typora to upload pics to github and returns url of uploaded pics to Typora which Typora will 
 # substitute in the markdown file
 
 # Expected behavior: Drag/drop a pic into Typora editor; the editor invokes this script and adds a hyperlink to the images in the markdown.
 
-# Prereq: need a github repo to store the pics and a local repo
+# Requirement: need tp initialize a git repo with whose remote is set to a github repo. It has to be github; for others, will have to modify BASE_DOWNLOAD_LINK
 
 LOCAL_PICS_REPO_PATH='/Users/viveks/repos/screenshots'
 BASE_DOWNLOAD_LINK='https://raw.githubusercontent.com/vksah32/screenshots/master'

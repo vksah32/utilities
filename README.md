@@ -11,3 +11,14 @@ This repo contains some helpful bash scripts.
 
  
 
+#### *- syncDir.sh*
+
+This script syncs a dir/git repo with the remote. I use it to automatically update my blog posts when I save a post in my local directory.
+
+To use it, run it in a terminal session:
+
+```bash
+./syncDir {{dirToSync}}
+```
+
+Note that that `dirToSync` needs to be a git repo for it to work.
