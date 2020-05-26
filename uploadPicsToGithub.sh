@@ -16,15 +16,12 @@ function main () {
     	printf "Please specify at least one file\n"
 		exit 1
 	fi
-
 	
 	# go through all pics, move them to screenshots repo
 	for file in "$@"
 	do
 		# printf "Processing %s\n" "$file"
-  		if  ! add_to_repo_and_upload "$file"; then 
-  			# printf "Successfully processed %s\n" "$file"
-		
+  		if  ! add_to_repo_and_upload "$file"; then 		
 			# printf "Failed processing %s\n" "$file"
 			exit 1
   		fi		 				 
